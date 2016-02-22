@@ -29,6 +29,26 @@ global variables. Closes at the end of the code.*/
 		res.render("index.ejs");
 	});
 
+	app.get("/login", function(req, res){
+
+	});
+
+	app.get("/signup", function(req, res){
+
+	});
+
+	app.get("/profile", function(req, res){
+
+	});
+
+	app.get("/whisky", function(req, res){
+
+	});
+
+	app.get("/tags/:id", function(req, res){
+		
+	});
+
 	/*Sets up the port for the web server to default to 3000 if it isn't specified*/
 	var port = process.env.PORT || 3000;
 	app.listen(port, function() {
