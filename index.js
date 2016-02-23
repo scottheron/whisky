@@ -12,12 +12,14 @@ global variables. Closes at the end of the code.*/
 
 	/*require the various middleware packages such as express and request*/
 	var express = require("express");
+	var app = express();//sets express to variable app
 	var ejsLayouts = require("express-ejs-layouts");
 	var request = require("request");
 	var bodyParser = require("body-parser");
 	var session = require("express-session");
+	var db = require("./models");
 
-	var app = express();//sets express to variable app
+	
 
 	/*Sets up the middleware for view engine, ejsLayouts, bodyParser, session and sets up 
 	the static directory for files such as CSS and JS.*/
@@ -26,7 +28,7 @@ global variables. Closes at the end of the code.*/
 	app.use(bodyParser.urlencoded({extended:false}));
 	app.use(express.static(__dirname + '/static'));//sets up static pages
 	app.use(session({
-		secret: 'Super secrettttt',
+		secret: 'Super secreT SaUcE',
 		resave: false,
 		saveUninitialized: true
 	}));
@@ -37,12 +39,30 @@ global variables. Closes at the end of the code.*/
 	});
 
 	app.get("/login", function(req, res){
-		req.session.lastPage = '/profile';
 		res.render("login.ejs");
 	});
 
 	app.get("/signup", function(req, res){
 		res.render("signup.ejs");
+	});
+
+	app.post("/signup", function(req, res){
+		var name = req.body.name;
+		var email = req.body.email;
+  		var password = req.body.password;
+  		db.user.findOrCreate({
+			where: {
+				email: email
+			},
+			defaults: {
+				name: name,
+				password: password
+			}
+		}).spread(function(user, created){
+			res.redirect("/signup");
+		}).catch(function(err){
+			res.send(err);
+		});
 	});
 
 	app.get("/profile", function(req, res){

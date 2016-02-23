@@ -24,9 +24,11 @@
     "express": "^4.13.4",
     "express-ejs-layouts": "^2.0.0",
     "express-session": "^1.13.0",
+    "flash": "^1.1.0",
     "pg": "^4.4.4",
     "pg-hstore": "^2.3.2",
     "request": "^2.69.0",
+    "require": "^2.4.20",
     "router": "^1.1.4",
     "sequelize": "^3.19.2"
   }
