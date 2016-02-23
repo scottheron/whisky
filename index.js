@@ -30,23 +30,23 @@ global variables. Closes at the end of the code.*/
 	});
 
 	app.get("/login", function(req, res){
-
+		res.render("login.ejs");
 	});
 
 	app.get("/signup", function(req, res){
-
+		res.render("signup.ejs");
 	});
 
 	app.get("/profile", function(req, res){
-
+		res.render("profile.ejs");
 	});
 
 	app.get("/whisky", function(req, res){
-
+		res.render("whisky.ejs");
 	});
 
 	app.get("/tags/:id", function(req, res){
-		
+		res.render("tags.ejs");
 	});
 
 	/*Sets up the port for the web server to default to 3000 if it isn't specified*/
