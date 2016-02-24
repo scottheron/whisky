@@ -155,7 +155,7 @@ global variables. Closes at the end of the code.*/
 		db.whisky.findOrCreate({
 			where: {
 				name: whiskyName,
-				
+
 			}
 		})
 		.spread(function(whisky){
