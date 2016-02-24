@@ -135,12 +135,10 @@ global variables. Closes at the end of the code.*/
   				function (err, window) {
   					var bottlings = window.$(".bodytext")['5'];
   					var tastings = window.$(".bodytext")['3'];
-  					var thing1 = window.$("h2");
-  					//console.log(tastings.textContent);
-					var listItems = bottlings.getElementsByTagName('li');
-					//for (var key in listItems){console.log(listItems[key].textContent);}
+  					var listItems = bottlings.getElementsByTagName('li');
+  					//for (var key in listItems){console.log(listItems[key].textContent);}
 					res.render("whiskyId.ejs", {
-						bottlings: bottlings.textContent,
+						bottlings: listItems,
 						tastings: tastings.textContent
 					});
   				}
@@ -149,26 +147,26 @@ global variables. Closes at the end of the code.*/
 	);
 	
 	/*Post route to send the whisky information to the database and save it to the users profile*/
-	// app.post("/whisky/:id", function(req, res){
-	// 	jsdom.env(
- //  				"http://www.scotchmaltwhisky.co.uk/balvenie.htm",
- //  				["http://code.jquery.com/jquery.js"],
- //  				function (err, window) {
- //  					var bottlings = window.$(".bodytext")['5'];
- //  					var tastings = window.$(".bodytext")['3'];
- //  					var thing1 = window.$("h2");
- //  					console.log(window);
- //  					//console.log(tastings.textContent);
-	// 				var listItems = bottlings.getElementsByTagName('li');
-	// 				//for (var key in listItems){console.log(listItems[key].textContent);}
-	// 				res.render("whisky.ejs", {
-	// 					bottlings: bottlings.textContent,
-	// 					tastings: tastings.textContent
-	// 				});
- //  				}
-	// 		);
-	// 	}
-	// );
+	 app.post("/whisky/:id", function(req, res){
+	 	jsdom.env(
+   				"http://www.scotchmaltwhisky.co.uk/balvenie.htm",
+   				["http://code.jquery.com/jquery.js"],
+   				function (err, window) {
+   					var bottlings = window.$(".bodytext")['5'];
+   					var tastings = window.$(".bodytext")['3'];
+   					var thing1 = window.$("h2");
+   					console.log(window);
+   					//console.log(tastings.textContent);
+	 				var listItems = bottlings.getElementsByTagName('li');
+	 				//for (var key in listItems){console.log(listItems[key].textContent);}
+	 				res.render("whisky.ejs", {
+	 					bottlings: bottlings.textContent,
+	 					tastings: tastings.textContent
+	 				});
+   				}
+	 		);
+	 	}
+	);
 
 	app.get("/tags/:id", function(req, res){
 		res.render("tags.ejs");
