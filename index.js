@@ -17,6 +17,7 @@ global variables. Closes at the end of the code.*/
 	var request = require("request");
 	var bodyParser = require("body-parser");
 	var session = require("express-session");
+	var jsdom = require("jsdom");
 	var db = require("./models");
 
 	
@@ -32,20 +33,55 @@ global variables. Closes at the end of the code.*/
 		resave: false,
 		saveUninitialized: true
 	}));
-
+	app.use(function(req, res, next){
+		if (req.session.userId) {
+			db.user.findById(req.session.userId).then(function(user){
+				req.currentUser = user;
+				res.locals.currentUser = user;
+				next();
+			});
+		} else {
+			req.currentUser = false;
+			res.locals.currentUser = false;
+			next();
+		}
+	});
+	
 	/*Sets up the home route and renders its index.ejs located in the views folder*/
 	app.get("/", function(req, res){
 		res.render("index.ejs");
 	});
 
+	/*Sets up the login route and renders the login page*/
 	app.get("/login", function(req, res){
 		res.render("login.ejs");
 	});
 
+	/*Takes the login info from the form on the login page and matches it against the database
+	to make sure there is a match. Then redirect to the home page*/
+	app.post('/login', function(req, res) {
+  		var email = req.body.email;
+  		var password = req.body.password;
+  		db.user.authenticate(email, password, function(err, user) {
+    		if (err) {
+     			res.send(err);
+    		} else if (user) {
+      			req.session.userId = user.id;
+      			res.redirect('/profile');
+    		} else {
+      			res.redirect('/login');
+    		}
+  		});
+	});
+
+	/*Set up the sign up route and render the signup page*/
 	app.get("/signup", function(req, res){
 		res.render("signup.ejs");
 	});
 
+	/*Grab the sign up information from the form on the sign up page. If the user doesn't
+	already exist then create a database entry for the new user with their name, email 
+	and password*/
 	app.post("/signup", function(req, res){
 		var name = req.body.name;
 		var email = req.body.email;
@@ -59,14 +95,42 @@ global variables. Closes at the end of the code.*/
 				password: password
 			}
 		}).spread(function(user, created){
-			res.redirect("/signup");
+			res.redirect("/login");
 		}).catch(function(err){
 			res.send(err);
 		});
 	});
 
+	/*Sets the route for logging out and redirects to the welcome page after signing the user out of
+	their session*/
+	app.get('/logout', function(req, res) {
+  		req.session.userId = false;
+  		res.redirect('/');
+	});
+
+	/*Sets the route for the users profile, checks to make sure the user is logged in, if they are
+	the page is diplayed*/
 	app.get("/profile", function(req, res){
-		res.render("profile.ejs");
+		if (req.currentUser) {
+			jsdom.env(
+  				"http://www.scotchmaltwhisky.co.uk/aberfeldy.htm",
+  				["http://code.jquery.com/jquery.js"],
+  				function (err, window) {
+  					var bottlings = window.$(".bodytext")['5'];
+  					var tastings = window.$(".bodytext")['3'];
+  					console.log(tastings.textContent);
+					var listItems = bottlings.getElementsByTagName('li');
+					for (var key in listItems){console.log(listItems[key].textContent);}
+					res.render("profile.ejs", {
+						bottlings: bottlings.textContent,
+						tastings: tastings.textContent
+					});
+  				}
+			);
+		} else {
+			res.redirect("/login");
+		}
+		
 	});
 
 	app.get("/whisky", function(req, res){

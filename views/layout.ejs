@@ -9,8 +9,6 @@ as well as links to the main CSS and Style files. A navigation bar has also been
 	<!--Import Google Icon Font-->
     <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 	<link rel="stylesheet" media="screen" href="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-	<link href="/css/star-rating.min.css" media="all" rel="stylesheet" type="text/css" />
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
 	<!-- Compiled and minified CSS -->
   	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/css/materialize.min.css">
 	<link rel="stylesheet" type="text/css" href="/css/style.css">
@@ -25,17 +23,19 @@ as well as links to the main CSS and Style files. A navigation bar has also been
 		  	<a href="/" class="brand-logo">Whisk.y</a>
 		  	<ul id="nav-mobile" class="right hide-on-med-and-down">
 		    	<li><a href="/">Home</a></li>
+		    	<li><a href="/signup">Sign Up</a></li>
+		    	<li><a href="/login">Login</a></li>
+		    	<li><a href="/logout">Log Out</a></li>
 		    </ul>
 		</div>
 	</nav>
-
+	<div>Current User: <%= currentUser.name %></div>
+	
 	<%- body %>
 
 	<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
 	<script src="http://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 	<script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
-	<script src="/script/star-rating.min.js" type="text/javascript"></script>
-	<script src="/script/star-rating_locale_LANG.js"></script>
 	<!-- Compiled and minified JavaScript -->
   	<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/js/materialize.min.js"></script>
 	<script type="text/javascript" src="/js/scrape.js"></script>
