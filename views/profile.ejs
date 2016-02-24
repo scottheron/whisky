@@ -6,8 +6,21 @@
 	    <% user.whiskies.forEach(function(whisky){ %>
 	    <li>
 	      	<div class="collapsible-header"><i class="material-icons">whatshot</i><%= whisky.name %></div>
-	      	<div class="collapsible-body"><p><%= whisky.tasting %></p></div>
-	    </li>
+	      	<div class="collapsible-body"><p><%= whisky.tasting %></p>
+	      		<div class="row">
+			    	<div class="row"> 
+			      		<form class="col s6">
+			        		<div class="row">
+			          			<div class="input-field col s6">
+			            			<input id="input_text" type="text">
+			            			<label for="input_text">Tag</label>
+			          			</div>
+			        		</div>
+			      		</form>
+			    	</div>
+				</div>
+			</div>
+		</li>
 	    <% }); %>
 	 </ul>
 <% } else { %>
