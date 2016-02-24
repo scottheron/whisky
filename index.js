@@ -67,7 +67,7 @@ global variables. Closes at the end of the code.*/
      			res.send(err);
     		} else if (user) {
       			req.session.userId = user.id;
-      			res.redirect('/profile');
+      			res.redirect('/whisky');
     		} else {
       			res.redirect('/login');
     		}
@@ -109,33 +109,66 @@ global variables. Closes at the end of the code.*/
 	});
 
 	/*Sets the route for the users profile, checks to make sure the user is logged in, if they are
-	the page is diplayed*/
+	the page is diplayed.*/
 	app.get("/profile", function(req, res){
 		if (req.currentUser) {
-			jsdom.env(
-  				"http://www.scotchmaltwhisky.co.uk/aberfeldy.htm",
+			res.render("profile.ejs");
+		} else {
+			res.redirect("/login");
+		}
+	});
+
+	/*Route for whisky where Data scraping occurs and the text retrieved is sent to the whisky.ejs
+	file to be actioned.*/
+	app.get("/whisky", function(req, res){
+		res.render("whisky.ejs");		
+	});
+
+	/*set up the route whisky/:id to grab the name of the whisky and send it to the whisky route for the scrap
+	address*/
+	app.get("/whisky/:id", function(req, res){
+		var whiskyName = req.params.id;
+		console.log(whiskyName);
+		jsdom.env(
+  				"http://www.scotchmaltwhisky.co.uk/"+whiskyName+".htm",
   				["http://code.jquery.com/jquery.js"],
   				function (err, window) {
   					var bottlings = window.$(".bodytext")['5'];
   					var tastings = window.$(".bodytext")['3'];
-  					console.log(tastings.textContent);
+  					var thing1 = window.$("h2");
+  					//console.log(tastings.textContent);
 					var listItems = bottlings.getElementsByTagName('li');
-					for (var key in listItems){console.log(listItems[key].textContent);}
-					res.render("profile.ejs", {
+					//for (var key in listItems){console.log(listItems[key].textContent);}
+					res.render("whiskyId.ejs", {
 						bottlings: bottlings.textContent,
 						tastings: tastings.textContent
 					});
   				}
 			);
-		} else {
-			res.redirect("/login");
 		}
-		
-	});
-
-	app.get("/whisky", function(req, res){
-		res.render("whisky.ejs");
-	});
+	);
+	
+	/*Post route to send the whisky information to the database and save it to the users profile*/
+	// app.post("/whisky/:id", function(req, res){
+	// 	jsdom.env(
+ //  				"http://www.scotchmaltwhisky.co.uk/balvenie.htm",
+ //  				["http://code.jquery.com/jquery.js"],
+ //  				function (err, window) {
+ //  					var bottlings = window.$(".bodytext")['5'];
+ //  					var tastings = window.$(".bodytext")['3'];
+ //  					var thing1 = window.$("h2");
+ //  					console.log(window);
+ //  					//console.log(tastings.textContent);
+	// 				var listItems = bottlings.getElementsByTagName('li');
+	// 				//for (var key in listItems){console.log(listItems[key].textContent);}
+	// 				res.render("whisky.ejs", {
+	// 					bottlings: bottlings.textContent,
+	// 					tastings: tastings.textContent
+	// 				});
+ //  				}
+	// 		);
+	// 	}
+	// );
 
 	app.get("/tags/:id", function(req, res){
 		res.render("tags.ejs");
