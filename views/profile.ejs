@@ -1,2 +1,15 @@
 <h3>profile</h3>
 
+<% if(user.whiskies.length > 0){ %>
+	<h5>Favorite Whisky</h5>
+	<ul class="collapsible popout" data-collapsible="accordion">
+	    <% user.whiskies.forEach(function(whisky){ %>
+	    <li>
+	      	<div class="collapsible-header"><i class="material-icons">whatshot</i><%= whisky.name %></div>
+	      	<div class="collapsible-body"><p><%= whisky.tasting %></p></div>
+	    </li>
+	    <% }); %>
+	 </ul>
+<% } else { %>
+	<h5>Add some Whiskies to your favorites to see them here</h5>
+<% } %>

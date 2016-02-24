@@ -86,19 +86,27 @@ global variables. Closes at the end of the code.*/
 		var name = req.body.name;
 		var email = req.body.email;
   		var password = req.body.password;
-  		db.user.findOrCreate({
-			where: {
-				email: email
-			},
-			defaults: {
-				name: name,
-				password: password
-			}
-		}).spread(function(user, created){
-			res.redirect("/login");
-		}).catch(function(err){
-			res.send(err);
-		});
+  		var password2 = req.body.password2;
+	  	if(password === password2) {
+	  		db.user.findOrCreate({
+				where: {
+					email: email
+				},
+				defaults: {
+					name: name,
+					password: password
+				}
+			})
+			.spread(function(user, created){
+				res.redirect("/login");
+			})
+			.catch(function(err){
+				res.send(err);
+			});
+	  	} else {
+	  		res.redirect("/signup");
+	  	}	
+	  		
 	});
 
 	/*Sets the route for logging out and redirects to the welcome page after signing the user out of
@@ -112,7 +120,17 @@ global variables. Closes at the end of the code.*/
 	the page is diplayed.*/
 	app.get("/profile", function(req, res){
 		if (req.currentUser) {
-			res.render("profile.ejs");
+			var userId = req.session.userId
+			db.user.find({
+				where: {
+					id: userId
+				},
+				include: [db.whisky]
+			}).then(function(user){
+				res.render("profile.ejs", {
+					user: user
+				});
+			});
 		} else {
 			res.redirect("/login");
 		}
@@ -150,12 +168,15 @@ global variables. Closes at the end of the code.*/
 	/*Post route to send the whisky information to the database and save it to the users profile*/
 	app.post("/whisky/:id", function(req, res){
 	 	var whiskyName = req.params.id;
+	 	var tastings = req.body.tastings;
 	if (req.currentUser){
 		var userId = req.session.userId;
 		db.whisky.findOrCreate({
 			where: {
 				name: whiskyName,
-
+			},
+			defaults: {
+				tasting: tastings
 			}
 		})
 		.spread(function(whisky){
