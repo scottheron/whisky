@@ -128,7 +128,7 @@ global variables. Closes at the end of the code.*/
 	address*/
 	app.get("/whisky/:id", function(req, res){
 		var whiskyName = req.params.id;
-		console.log(whiskyName);
+		//console.log(whiskyName);
 		jsdom.env(
   				"http://www.scotchmaltwhisky.co.uk/"+whiskyName+".htm",
   				["http://code.jquery.com/jquery.js"],
@@ -139,7 +139,8 @@ global variables. Closes at the end of the code.*/
   					//for (var key in listItems){console.log(listItems[key].textContent);}
 					res.render("whiskyId.ejs", {
 						bottlings: listItems,
-						tastings: tastings.textContent
+						tastings: tastings.textContent,
+						whiskyName: whiskyName
 					});
   				}
 			);
@@ -147,26 +148,39 @@ global variables. Closes at the end of the code.*/
 	);
 	
 	/*Post route to send the whisky information to the database and save it to the users profile*/
-	 app.post("/whisky/:id", function(req, res){
-	 	jsdom.env(
-   				"http://www.scotchmaltwhisky.co.uk/balvenie.htm",
-   				["http://code.jquery.com/jquery.js"],
-   				function (err, window) {
-   					var bottlings = window.$(".bodytext")['5'];
-   					var tastings = window.$(".bodytext")['3'];
-   					var thing1 = window.$("h2");
-   					console.log(window);
-   					//console.log(tastings.textContent);
-	 				var listItems = bottlings.getElementsByTagName('li');
-	 				//for (var key in listItems){console.log(listItems[key].textContent);}
-	 				res.render("whisky.ejs", {
-	 					bottlings: bottlings.textContent,
-	 					tastings: tastings.textContent
-	 				});
-   				}
-	 		);
-	 	}
-	);
+	app.post("/whisky/:id", function(req, res){
+	 	var whiskyName = req.params.id;
+	if (req.currentUser){
+		var userId = req.session.userId;
+		db.whisky.findOrCreate({
+			where: {
+				name: whiskyName,
+				
+			}
+		})
+		.spread(function(whisky){
+			console.log("here");
+			db.user.find({
+				where: {
+					id: userId
+				}
+			})
+			.then(function(user){
+				if (user) {
+					user.addWhisky(whisky);
+					res.redirect('/whisky/'+whiskyName);
+				} else {
+					res.send("error");
+				}
+				
+			});
+		});
+	} else {
+		res.redirect("/login");
+	}
+	 	
+		
+	});
 
 	app.get("/tags/:id", function(req, res){
 		res.render("tags.ejs");

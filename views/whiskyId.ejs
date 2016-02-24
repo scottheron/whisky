@@ -1,24 +1,25 @@
 <div>
-	<h3>whisky</h3>
+	<h3>whisky - <%= whiskyName %></h3>
 	
 </div>
 <form>
 	<a class='dropdown-button btn' href='#' data-activates='dropdown1'>Select a Whisky from this drop down list</a>
 	<ul id='dropdown1' class='dropdown-content'>
 	    <li><a href="/whisky/aberfeldy">Aberfeldy</a></li>
-	    <li><a href="#!">two</a></li>
-	    <li class="divider"></li>
-	    <li><a href="#!">three</a></li>
+	    <li><a href="/whisky/talisker">Talisker</a></li>
+	    <li><a href="/whisky/oban">Oban</a></li>
   	</ul>
 </form>
 
 
 <form method="POST" class="col s12">
-	<button class="btn waves-effect waves-light" type="submit" name="action">Submit
+	<button class="btn waves-effect waves-light" type="submit" name="action">Add To Favorites
     		<i class="material-icons right">send</i>
   	</button>
-	<h5>Bottlings - </h5><br><p><% for (var key in bottlings){ %>
-										<p><%= bottlings[key].textContent %></p>
-							    <% } %><br>
-	<h5>Tastings - </h5><br><p><%= tastings %></p>
+  	<input type="hidden" name="name" value="<%= whiskyName %>" />
 </form>
+
+<h5>Bottlings - </h5><br><p><% for (var key in bottlings){ %>
+									<p><%= bottlings[key].textContent %></p>
+						    <% } %><br>
+<h5>Tastings - </h5><br><p><%= tastings %></p>
