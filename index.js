@@ -74,7 +74,7 @@ global variables. Closes at the end of the code.*/
       			req.session.userId = user.id;
       			res.redirect('/whisky');
     		} else {
-      			res.redirect('/login');
+      			res.redirect('/signup');
     		}
   		});
 	});
