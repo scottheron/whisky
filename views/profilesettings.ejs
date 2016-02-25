@@ -1,0 +1,12 @@
+<h3>profile picture upload</h3>
+
+<form enctype="multipart/form-data" action="/profile/settings" method="POST">
+	<input type="file" name="avatar"><br>	
+	<input type="submit" class="btn btn-primary">
+</form>
+
+<h4>Current Avatar Picture</h4>
+
+<img class="materialboxed" width="300" src="<%= userPic %>">
+
+

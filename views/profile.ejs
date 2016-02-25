@@ -1,4 +1,9 @@
 <h3>profile</h3>
+<div id="profilePic">	
+	<% if(userPic) { %><img class="materialboxed" width="75" src="<%= userPic %>"><% } %>
+</div>
+
+<a class="waves-effect waves-light btn" href="/profile/settings">settings</a>
 
 <% if(whisky.length > 0){ %>
 	<h5>Favorite Whiskies</h5>
@@ -23,11 +28,11 @@
 				<p><% whisky.tags.forEach(function(tag){ %>
 					<%= tag.tag %>, 
 				<% }); %></p>
-			<form class=".delete-link" action="/profile/<%= whisky.id %>/delete">
-				<button class="btn waves-effect waves-light" type="delete" name="action">Delete
-					<i class="material-icons right">send</i>
-				</button>
-			</form>
+				<form class=".delete-link" action="/profile/<%= whisky.id %>/delete">
+					<button class="btn waves-effect waves-light" type="delete" name="action">Delete
+						<i class="material-icons right">send</i>
+					</button>
+				</form>
 			</div>
 			
 		</li>

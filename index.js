@@ -18,12 +18,12 @@ global variables. Closes at the end of the code.*/
 	var bodyParser = require("body-parser");
 	var session = require("express-session");
 	var jsdom = require("jsdom");
-	var multer = require('multer');
-	var cloudinary = require('cloudinary');
+	var multer = require("multer");
+	var cloudinary = require("cloudinary");
 	var db = require("./models");
 
 	var upload = multer({dest: './uploads'});
-	var avatar = [];
+	var avatar = "";
 
 	
 
@@ -132,10 +132,12 @@ global variables. Closes at the end of the code.*/
 				}
 			})
 			.then(function(user){
+				var userPic = cloudinary.url(user.image, { width: 300});
 				user.getWhiskies({include:[db.tag]})
 				.then(function(whisky) {
-					res.render("profile", {user, whisky});
-				})
+					//var userprofileimage = cloudinary.image(avatar, {width: '300'});
+					res.render("profile", {user, whisky, userPic});
+				});
 			});
 		} else {
 			res.redirect("/login");
@@ -167,6 +169,55 @@ global variables. Closes at the end of the code.*/
 				}
 			});
 		});
+	});
+
+	/*Sets route for a settings page for a users profile where they can upload a picture*/
+	app.get("/profile/settings", function(req, res){
+		if (req.currentUser) {
+			db.user.find({
+				where: {
+					id: req.session.userId
+				}
+			})
+			.then(function(user){
+				var userPic = cloudinary.url(user.image, { width: 300});
+	        	res.render('profilesettings.ejs', {
+	            userPic: userPic
+	        });
+				// res.render("profilesettings.ejs", {
+				// 	avatarId: user.image
+				// });
+			});
+		} else {
+			res.redirect("/login");
+		}
+	});
+		
+	app.post("/profile/settings", upload.single('avatar'), function(req, res){
+		
+		cloudinary.uploader.upload(req.file.path, function(result) {
+    		avatarId = result.public_id;
+    		db.user.update({
+    			image: avatarId
+    		},{
+    			where: {
+    				id: req.session.userId
+    			}
+    		})
+    		.then(function(avatarId){
+				if (avatarId)	{
+					res.redirect("/profile/settings");
+				} else {
+					res.send("error");
+				}
+			});
+  		});
+
+		// cloudinary.uploader.upload(req.file.path, function(result){
+		// 	avatar = result.public_id;
+		// 	res.send(result);
+		// 	//res.redirect("/profile/settings");
+		// });
 	});
 
 	/*Set route to delete a favorite from the database*/
