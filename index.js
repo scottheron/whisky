@@ -10,7 +10,7 @@ This is Main index.js file for the app*/
 global variables. Closes at the end of the code.*/
 (function(){
 
-	/*require the various middleware packages such as express and request*/
+	/*require the various middleware packages such as express and bodyParser*/
 	var express = require("express");
 	var app = express();//sets express to variable app
 	var ejsLayouts = require("express-ejs-layouts");
@@ -18,7 +18,12 @@ global variables. Closes at the end of the code.*/
 	var bodyParser = require("body-parser");
 	var session = require("express-session");
 	var jsdom = require("jsdom");
+	var multer = require('multer');
+	var cloudinary = require('cloudinary');
 	var db = require("./models");
+
+	var upload = multer({dest: './uploads'});
+	var avatar = [];
 
 	
 
@@ -162,6 +167,28 @@ global variables. Closes at the end of the code.*/
 				}
 			});
 		});
+	});
+
+	/*Set route to delete a favorite from the database*/
+	app.get('/profile/:id/delete', function(req, res) {
+ //  		project.removeTask(task1).then(function() {
+ //  			// it's gone
+	// });
+
+  		 var id = req.params.id;
+  		 var userId = req.session.userId;
+  		 db.usersWhiskys.destroy({
+    		where: {
+       			whiskyId: id,
+       			userId: userId
+     		}
+  		 })
+  		 .then(function() {
+     		res.redirect('/profile');
+  		 })
+  		 .catch(function(e) {
+     		res.send({'msg': 'error', 'error': e});
+  		 });
 	});
 
 	/*Route for whisky where Data scraping occurs and the text retrieved is sent to the whisky.ejs

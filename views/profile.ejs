@@ -1,7 +1,7 @@
 <h3>profile</h3>
 
 <% if(whisky.length > 0){ %>
-	<h5>Favorite Whisky</h5>
+	<h5>Favorite Whiskies</h5>
 	<ul class="collapsible popout" data-collapsible="accordion">
 	    <% whisky.forEach(function(whisky){ %>
 	    <li>
@@ -23,10 +23,16 @@
 				<p><% whisky.tags.forEach(function(tag){ %>
 					<%= tag.tag %>, 
 				<% }); %></p>
+			<form class=".delete-link" action="/profile/<%= whisky.id %>/delete">
+				<button class="btn waves-effect waves-light" type="delete" name="action">Delete
+					<i class="material-icons right">send</i>
+				</button>
+			</form>
 			</div>
+			
 		</li>
-	    <% }); %>
-	 </ul>
+		<% }); %>
+	</ul>
 <% } else { %>
 	<h5>Add some Whiskies to your favorites to see them here</h5>
 <% } %>
