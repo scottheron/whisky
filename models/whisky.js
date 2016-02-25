@@ -11,6 +11,7 @@ module.exports = function(sequelize, DataTypes) {
       associate: function(models) {
         // associations can be defined here
         models.whisky.belongsToMany(models.user, {through: 'usersWhiskys'});
+        models.whisky.belongsToMany(models.tag, {through: 'whiskiesTags'});
       }
     }
   });

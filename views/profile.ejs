@@ -1,24 +1,28 @@
 <h3>profile</h3>
 
-<% if(user.whiskies.length > 0){ %>
+<% if(whisky.length > 0){ %>
 	<h5>Favorite Whisky</h5>
 	<ul class="collapsible popout" data-collapsible="accordion">
-	    <% user.whiskies.forEach(function(whisky){ %>
+	    <% whisky.forEach(function(whisky){ %>
 	    <li>
 	      	<div class="collapsible-header"><i class="material-icons">whatshot</i><%= whisky.name %></div>
 	      	<div class="collapsible-body"><p><%= whisky.tasting %></p>
 	      		<div class="row">
 			    	<div class="row"> 
-			      		<form class="col s6">
+			      		<form method="POST" class="col s6">
 			        		<div class="row">
 			          			<div class="input-field col s6">
-			            			<input id="input_text" type="text">
+			            			<input name="tag" id="input_text" type="text">
 			            			<label for="input_text">Tag</label>
+			            			<input type="hidden" name="whiskyName" value="<%= whisky.name %>" />
 			          			</div>
 			        		</div>
 			      		</form>
 			    	</div>
 				</div>
+				<p><% whisky.tags.forEach(function(tag){ %>
+					<%= tag.tag %>, 
+				<% }); %></p>
 			</div>
 		</li>
 	    <% }); %>

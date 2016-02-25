@@ -124,16 +124,44 @@ global variables. Closes at the end of the code.*/
 			db.user.find({
 				where: {
 					id: userId
-				},
-				include: [db.whisky]
-			}).then(function(user){
-				res.render("profile.ejs", {
-					user: user
-				});
+				}
+			})
+			.then(function(user){
+				user.getWhiskies({include:[db.tag]})
+				.then(function(whisky) {
+					res.render("profile", {user, whisky});
+				})
 			});
 		} else {
 			res.redirect("/login");
 		}
+	});
+
+	/*Post route for /profile. used to grab the tag and push it back out as text*/
+	app.post("/profile", function(req, res){
+		var tag = req.body.tag;
+		var whiskyName = req.body.whiskyName;
+		db.tag.findOrCreate({
+			where: {
+				tag: tag
+			}
+		})
+		.spread(function(tag){
+			db.whisky.find({
+				where: {
+					name: whiskyName
+				}
+			})
+			.then(function(whisky){
+				if (whisky)	{
+					whisky.addTag(tag);
+					res.redirect("/profile");
+				} else {
+					
+					res.send("error");
+				}
+			});
+		});
 	});
 
 	/*Route for whisky where Data scraping occurs and the text retrieved is sent to the whisky.ejs
@@ -180,7 +208,6 @@ global variables. Closes at the end of the code.*/
 			}
 		})
 		.spread(function(whisky){
-			console.log("here");
 			db.user.find({
 				where: {
 					id: userId
