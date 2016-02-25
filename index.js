@@ -259,13 +259,20 @@ global variables. Closes at the end of the code.*/
   				function (err, window) {
   					var bottlings = window.$(".bodytext")['5'];
   					var tastings = window.$(".bodytext")['3'];
-  					var listItems = bottlings.getElementsByTagName('li');
+  					if (!bottlings){
+  						var listItems = [];
+  					} else {
+  						var listItems = bottlings.getElementsByTagName('li');
+  					}
+  					if (!tastings){
+  						tastings = [];
+  					}
   					//for (var key in listItems){console.log(listItems[key].textContent);}
 					res.render("whiskyId.ejs", {
 						bottlings: listItems,
 						tastings: tastings.textContent,
 						whiskyName: whiskyName
-					});
+					});  
   				}
 			);
 		}
