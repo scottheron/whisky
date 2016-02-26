@@ -1,4 +1,4 @@
-/*WDI06SEA Project 2 - Whisky Match
+/*WDI06SEA Project 2 - Whisky Match by Scott Heron
 
 Concept - match a user with a single malt Scottish whisky based on their user preferences. Display where the distillery 
 is located on a map and suggest recipies that incorporate the whisky. The users can save their favorite whiskys to their
@@ -22,7 +22,7 @@ global variables. Closes at the end of the code.*/
 	var cloudinary = require("cloudinary");
 	var db = require("./models");
 	var Flickr = require("node-flickr");
-	var keys = {"api_key": process.env.FLICKR_KEY};
+	var keys = {"api_key": process.env.FLICKR_KEY};//API key link for Flickr
 	var	flickr = new Flickr(keys);
 
 	var upload = multer({dest: './uploads'});
@@ -249,11 +249,12 @@ global variables. Closes at the end of the code.*/
 	});
 
 	/*set up the route whisky/:id to grab the name of the whisky and send it to the whisky route for the scrap
-	address. Then perform a flickr image search and if the search is invalid (contains a '-') search with
-	default settings "single+malt+whisky". In addition if the listItems and bottling variables are undefined
-	set them to a blank array*/
+	address. Then perform a flickr image search and if the search is invalid (contains a '-' or returns less than 
+	10 results) search with default settings "single+malt+whisky". In addition if the listItems and bottling 
+	variables are undefined set them to a blank array*/
 	app.get("/whisky/:id", function(req, res){
 		var whiskyName = req.params.id;
+		var search;
 		jsdom.env(
   				"http://www.scotchmaltwhisky.co.uk/"+whiskyName+".htm",
   				["http://code.jquery.com/jquery.js"],
@@ -268,12 +269,15 @@ global variables. Closes at the end of the code.*/
   					if (!tastings){
   						tastings = [];
   					}
-  					var search = whiskyName;
+  					search = whiskyName;
+  					if(search.indexOf("-") != -1) {
+  						search = "single+malt+whisky";
+  					}
   					flickr.get("photos.search", {
-  						text: whiskyName
+  						text: search
   					},
   					function(err, result){
-  						if (result.length < 10){
+  						if (result.photos.photo.length < 10){
   							search = "single+malt+whisky";
   						} else {
   							search = whiskyName;
