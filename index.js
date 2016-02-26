@@ -138,7 +138,6 @@ global variables. Closes at the end of the code.*/
 				var userPic = cloudinary.url(user.image, { width: 300});
 				user.getWhiskies({include:[db.tag]})
 				.then(function(whisky) {
-					//var userprofileimage = cloudinary.image(avatar, {width: '300'});
 					res.render("profile", {user, whisky, userPic});
 				});
 			});
@@ -185,11 +184,8 @@ global variables. Closes at the end of the code.*/
 			.then(function(user){
 				var userPic = cloudinary.url(user.image, { width: 300});
 	        	res.render('profilesettings.ejs', {
-	            userPic: userPic
-	        });
-				// res.render("profilesettings.ejs", {
-				// 	avatarId: user.image
-				// });
+	            	userPic: userPic
+	        	});
 			});
 		} else {
 			res.redirect("/login");
