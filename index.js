@@ -195,9 +195,10 @@ global variables. Closes at the end of the code.*/
 			res.redirect("/login");
 		}
 	});
-		
+	
+	/*Post route for settings uploads a users profile picture choice and saves the resultant URL link to
+	the database entry for the user table under image*/
 	app.post("/profile/settings", upload.single('avatar'), function(req, res){
-		
 		cloudinary.uploader.upload(req.file.path, function(result) {
     		avatarId = result.public_id;
     		db.user.update({
@@ -215,21 +216,11 @@ global variables. Closes at the end of the code.*/
 				}
 			});
   		});
-
-		// cloudinary.uploader.upload(req.file.path, function(result){
-		// 	avatar = result.public_id;
-		// 	res.send(result);
-		// 	//res.redirect("/profile/settings");
-		// });
 	});
 
 	/*Set route to delete a favorite from the database*/
 	app.get('/profile/:id/delete', function(req, res) {
- //  		project.removeTask(task1).then(function() {
- //  			// it's gone
-	// });
-
-  		 var id = req.params.id;
+   		 var id = req.params.id;
   		 var userId = req.session.userId;
   		 db.usersWhiskys.destroy({
     		where: {
@@ -251,17 +242,18 @@ global variables. Closes at the end of the code.*/
 		flickr.get("photos.search",{
   			text: "single+malt+whisky"
 		}, function(err, result) {
-  		if(err) { throw new Error(err); }
+  		if(err) { res.send({'msg': 'error', 'error': e}); }
   			res.render("whisky.ejs", {result});
 		});
 				
 	});
 
 	/*set up the route whisky/:id to grab the name of the whisky and send it to the whisky route for the scrap
-	address*/
+	address. Then perform a flickr image search and if the search is invalid (contains a '-') search with
+	default settings "single+malt+whisky". In addition if the listItems and bottling variables are undefined
+	set them to a blank array*/
 	app.get("/whisky/:id", function(req, res){
 		var whiskyName = req.params.id;
-		//console.log(whiskyName);
 		jsdom.env(
   				"http://www.scotchmaltwhisky.co.uk/"+whiskyName+".htm",
   				["http://code.jquery.com/jquery.js"],
@@ -280,7 +272,7 @@ global variables. Closes at the end of the code.*/
 					flickr.get("photos.search",{
   						text: search
 					}, function(err, result) {
-  						if(err) { throw new Error(err); }
+  						if(err) { res.send({'msg': 'error', 'error': e}); }
   						res.render("whiskyId.ejs", {
 							bottlings: listItems,
 							tastings: tastings.textContent,
@@ -294,50 +286,44 @@ global variables. Closes at the end of the code.*/
 		}
 	);
 	
-	/*Post route to send the whisky information to the database and save it to the users profile*/
+	/*Post route to send the whisky name to the database and save it to the users profile as a favorite
+	using the join table*/
 	app.post("/whisky/:id", function(req, res){
 	 	var whiskyName = req.params.id;
 	 	var tastings = req.body.tastings;
-	if (req.currentUser){
-		var userId = req.session.userId;
-		db.whisky.findOrCreate({
-			where: {
-				name: whiskyName,
-			},
-			defaults: {
-				tasting: tastings
-			}
-		})
-		.spread(function(whisky){
-			db.user.find({
+		if (req.currentUser){
+			var userId = req.session.userId;
+			db.whisky.findOrCreate({
 				where: {
-					id: userId
+					name: whiskyName,
+				},
+				defaults: {
+					tasting: tastings
 				}
 			})
-			.then(function(user){
-				if (user) {
-					user.addWhisky(whisky);
-					res.redirect('/whisky/'+whiskyName);
-				} else {
-					res.send("error");
-				}
-				
+			.spread(function(whisky){
+				db.user.find({
+					where: {
+						id: userId
+					}
+				})
+				.then(function(user){
+					if (user) {
+						user.addWhisky(whisky);
+						res.redirect('/whisky/'+whiskyName);
+					} else {
+						res.send("error");
+					}
+					
+				});
 			});
-		});
-	} else {
-		res.redirect("/login");
-	}
-	 	
-		
-	});
-
-	app.get("/tags/:id", function(req, res){
-		res.render("tags.ejs");
+		} else {
+			res.redirect("/login");
+		}
 	});
 
 	/*Sets up the port for the web server to default to 3000 if it isn't specified*/
 	var port = process.env.PORT || 3000;
 	app.listen(port, function() {
 	});
-
 }());
