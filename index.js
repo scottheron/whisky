@@ -268,8 +268,18 @@ global variables. Closes at the end of the code.*/
   					if (!tastings){
   						tastings = [];
   					}
-  					if(whiskyName.indexOf("-") != -1){search = "single+malt+whisky"}else{search = whiskyName+"+whisky"}
-					flickr.get("photos.search",{
+  					var search = whiskyName;
+  					flickr.get("photos.search", {
+  						text: whiskyName
+  					},
+  					function(err, result){
+  						if (result.length < 10){
+  							search = "single+malt+whisky";
+  						} else {
+  							search = whiskyName;
+  						}
+  					});
+  					flickr.get("photos.search",{
   						text: search
 					}, function(err, result) {
   						if(err) { res.send({'msg': 'error', 'error': e}); }
