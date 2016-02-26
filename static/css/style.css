@@ -1,8 +1,14 @@
 /*Main CSS file for the app*/
+body {
+	background-color: antiquewhite;
+}
+
+.nav-wrapper{
+	color: #FAEBD7;
+}
 
 #getStarted {
 	margin: 5em auto 0 auto;
 	text-align: center;
 	width: 30em;
 }
-
