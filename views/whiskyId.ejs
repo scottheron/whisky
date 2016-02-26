@@ -3,7 +3,7 @@
 	
 </div>
 <form class="whiskyMenu">
-	<a style="color:#FAEBD7" class='dropdown-button btn brown darken-4' href='#' data-activates='dropdown1'>Select a Whisky from this drop down list</a>
+	<a style="color:#FAEBD7" class='dropdown-button btn brown darken-4' href='#' data-activates='dropdown1'>Select a Whisky from this drop down list <i class="material-icons dp48">list</i></a>
 	<ul style="background-color:#FAEBD7" id='dropdown1' class='dropdown-content'>
 	    <li><a class="black-text" href="/whisky/aberfeldy">Aberfeldy</a></li>
 	    <li><a class="black-text" href="/whisky/aberlour">Aberlour</a></li>
@@ -111,8 +111,8 @@
 	</ul>
 </form>
 
-<form method="POST" class="col s12">
-	<button class="btn waves-effect waves-light white-text brown darken-4" type="submit" name="action">Add To Favorites
+<form method="POST" class="col s6">
+	<button  style="color:#FAEBD7" class="btn waves-effect waves-light brown darken-4" type="submit" name="action">Add To Favorites
     		<i class="material-icons right">send</i>
   	</button>
   	<input type="hidden" name="name" value="<%= whiskyName %>" />
@@ -120,8 +120,8 @@
 </form>
 
 
-<div class="slider">
-    <ul class="slides">
+<div class="slider brown darken-4">
+    <ul class="slides brown darken-4">
       <li>
         <img src="https://farm<%= result.photos.photo[1].farm %>.staticflickr.com/<%= result.photos.photo[1].server %>/<%= result.photos.photo[1].id %>_<%= result.photos.photo[1].secret %>.jpg"> <!-- random image -->
        </li>
