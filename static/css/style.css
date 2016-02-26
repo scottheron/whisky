@@ -17,3 +17,11 @@ body {
 	width: 36em;
 	margin: 0 auto;
 }
+
+#login {
+	width: 60em;
+}
+
+.heading {
+	margin: 1em 0 1em 2em;
+}
