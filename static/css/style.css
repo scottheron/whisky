@@ -1,6 +1,9 @@
 /*Main CSS file for the app*/
+
 body {
 	background-color: antiquewhite;
+	font-family: 'Cinzel', serif;
+	font-weight: 700
 }
 
 .nav-wrapper{
@@ -8,9 +11,9 @@ body {
 }
 
 #getStarted {
-	margin: 2em auto 0 auto;
+	margin: 0 auto;
 	text-align: center;
-	width: 50em;
+	width: 70em;
 }
 
 #mapOld {
