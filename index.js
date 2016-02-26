@@ -21,11 +21,14 @@ global variables. Closes at the end of the code.*/
 	var multer = require("multer");
 	var cloudinary = require("cloudinary");
 	var db = require("./models");
+	var Flickr = require("node-flickr");
+	var keys = {"api_key": process.env.FLICKR_KEY};
+	var	flickr = new Flickr(keys);
 
 	var upload = multer({dest: './uploads'});
 	var avatar = "";
-
 	
+
 
 	/*Sets up the middleware for view engine, ejsLayouts, bodyParser, session and sets up 
 	the static directory for files such as CSS and JS.*/
@@ -245,7 +248,13 @@ global variables. Closes at the end of the code.*/
 	/*Route for whisky where Data scraping occurs and the text retrieved is sent to the whisky.ejs
 	file to be actioned.*/
 	app.get("/whisky", function(req, res){
-		res.render("whisky.ejs");		
+		flickr.get("photos.search",{
+  			text: "single+malt+whisky"
+		}, function(err, result) {
+  		if(err) { throw new Error(err); }
+  			res.render("whisky.ejs", {result});
+		});
+				
 	});
 
 	/*set up the route whisky/:id to grab the name of the whisky and send it to the whisky route for the scrap
@@ -267,12 +276,19 @@ global variables. Closes at the end of the code.*/
   					if (!tastings){
   						tastings = [];
   					}
-  					//for (var key in listItems){console.log(listItems[key].textContent);}
-					res.render("whiskyId.ejs", {
-						bottlings: listItems,
-						tastings: tastings.textContent,
-						whiskyName: whiskyName
-					});  
+  					if(whiskyName.indexOf("-") != -1){search = "single+malt+whisky"}else{search = whiskyName+"+whisky"}
+					flickr.get("photos.search",{
+  						text: search
+					}, function(err, result) {
+  						if(err) { throw new Error(err); }
+  						res.render("whiskyId.ejs", {
+							bottlings: listItems,
+							tastings: tastings.textContent,
+							whiskyName: whiskyName,
+							result: result
+						});
+					});
+					  
   				}
 			);
 		}
