@@ -138,6 +138,7 @@ global variables. Closes at the end of the code.*/
 				var userPic = cloudinary.url(user.image, { width: 300});
 				user.getWhiskies({include:[db.tag]})
 				.then(function(whisky) {
+					//console.
 					res.render("profile", {user, whisky, userPic});
 				});
 			});
@@ -265,7 +266,7 @@ global variables. Closes at the end of the code.*/
   					if (!tastings){
   						tastings = [];
   					}
-  					search = whiskyName;
+  					search = whiskyName+"+whisky";
   					if(search.indexOf("-") != -1) {
   						search = "single+malt+whisky";
   					}

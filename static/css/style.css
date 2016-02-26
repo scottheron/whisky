@@ -25,3 +25,13 @@ body {
 .heading {
 	margin: 1em 0 1em 2em;
 }
+
+#profilePic {
+	width: 10em;
+	float: right;
+	padding-top: -10em;
+}
+
+#profileHeading {
+	width: 50em;
+}

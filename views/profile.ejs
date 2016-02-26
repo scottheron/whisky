@@ -1,8 +1,12 @@
 <!-- EJS file to display the content for the users profile.  -->
 
-<h3 class="heading">profile</h3>
-<div id="profilePic">	
-	<% if(userPic) { %><img class="materialboxed" width="75" src="<%= userPic %>"><% } %>
+<div class="col-md-12">
+	<div id="profilePic">	
+		<% if(userPic) { %><img class="materialboxed" width="75" src="<%= userPic %>"><% } %>
+	</div>
+	<div id="profileHeading">
+		<h3 class="heading">profile</h3>
+	</div>
 </div>
 
 <a class="waves-effect waves-light btn" href="/profile/settings">settings</a>
@@ -31,7 +35,7 @@
 					<%= tag.tag %>, 
 				<% }); %></p>
 				<form class=".delete-link" action="/profile/<%= whisky.id %>/delete">
-					<button class="btn waves-effect waves-light" type="delete" name="action">Delete
+					<button style="color:#FAEBD7" class="btn waves-effect waves-light brown darken-4" type="delete" name="action">Delete
 						<i class="material-icons right">send</i>
 					</button>
 				</form>
