@@ -20,9 +20,6 @@ module.exports = {
       image: {
         type: Sequelize.STRING
       },
-      favorites: {
-        type: Sequelize.STRING
-      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

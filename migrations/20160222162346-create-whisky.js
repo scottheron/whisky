@@ -11,18 +11,6 @@ module.exports = {
       name: {
         type: Sequelize.STRING
       },
-      tasting: {
-        type: Sequelize.TEXT
-      },
-      age: {
-        type: Sequelize.STRING
-      },
-      distillerydescription: {
-        type: Sequelize.TEXT
-      },
-      distilleryaddress: {
-        type: Sequelize.TEXT
-      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

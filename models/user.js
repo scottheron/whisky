@@ -12,8 +12,7 @@ module.exports = function(sequelize, DataTypes) {
         len: [8,99]
       }
     },
-    image: DataTypes.STRING,
-    favorites: DataTypes.STRING
+    image: DataTypes.STRING
   }, {
     classMethods: {
       associate: function(models) {
