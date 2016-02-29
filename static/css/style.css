@@ -17,7 +17,7 @@ body {
 }
 
 #mapOld {
-    width: 36em;
+    width: 34em;
     margin: 0 auto;
 }
 
@@ -58,13 +58,17 @@ body {
     margin: 3em auto 0 auto;
     border-radius: 5%
 }
+#copyrite {
+    width: 30em;
+    margin: 0 auto;
+}
 
 /*conditions for small screen sizes*/
 @media (max-width: 62em) {
     #getStarted {
         margin: 0 auto;
         text-align: left;
-        width: 30em;
+        width: 28em;
     }
 
     #mapOld {
