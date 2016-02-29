@@ -1,3 +1,7 @@
+<!-- Whisky page which displays the dropdown menu the user can select from along with a field to display the 
+information about bottlings and tasting notes that was scrapped on the main index page. In addition there is
+a carousel showing images from a flicker search that is context relivent.-->
+
 <div>
 	<h3 class="heading">whisky - <%= whiskyName %></h3>
 	
@@ -111,6 +115,7 @@
 	</ul>
 </form>
 
+<!-- Add to favorites button -->
 <form method="POST" class="col s6">
 	<button  style="color:#FAEBD7" class="btn waves-effect waves-light brown darken-4" type="submit" name="action">Add To Favorites
     		<i class="material-icons right">send</i>
@@ -119,7 +124,7 @@
   	<input type="hidden" name="tastings" value="<%= tastings %>" />
 </form>
 
-
+<!-- Image bcrousel -->
 <div class="slider brown darken-4">
     <ul class="slides brown darken-4">
       <li>

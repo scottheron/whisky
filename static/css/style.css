@@ -1,43 +1,60 @@
 /*Main CSS file for the app*/
 
 body {
-	background-color: antiquewhite;
-	font-family: 'Cinzel', serif;
-	font-weight: 700
+    background-color: antiquewhite;
+    font-family: 'Cinzel', serif;
+    font-weight: 700
 }
 
 .nav-wrapper{
-	color: #FAEBD7;
+    color: #FAEBD7;
 }
 
 #getStarted {
-	margin: 0 auto;
-	text-align: center;
-	width: 70em;
+    margin: 0 auto;
+    text-align: center;
+    width: 70em;
 }
 
 #mapOld {
-	width: 36em;
-	margin: 0 auto;
+    width: 36em;
+    margin: 0 auto;
 }
 
 #login {
-	width: 60em;
+    width: 60em;
 }
 
 #signup{
-	width: 60em;
+    width: 60em;
 }
 .heading {
-	margin: 1em 0 1em 2em;
+    margin: 1em 0 1em 2em;
 }
 
 #profilePic {
-	width: 10em;
-	float: right;
-	padding-top: -10em;
+    width: 10em;
+    float: right;
+    padding-top: -10em;
 }
 
 #profileHeading {
-	width: 50em;
+    width: 50em;
+}
+
+#fourzerofour{
+    margin: 0 auto;
+    width: 40em;
+}
+
+#about {
+    margin: 0 auto;
+    width: 60em;
+}
+
+#aboutPicture img {
+    float: left;
+    width: 20em;
+    margin: 3em 0 0 21em;
+    border-radius: 5%
 }

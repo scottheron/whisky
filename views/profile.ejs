@@ -1,5 +1,7 @@
 <!-- EJS file to display the content for the users profile.  -->
 
+<!-- div holding the profile picture and heading. ejs tags hold conditional code to display the profile picture
+only if it exists -->
 <div class="col-md-12">
 	<div id="profilePic">	
 		<% if(userPic) { %><img class="materialboxed" width="75" src="<%= userPic %>"><% } %>
@@ -9,8 +11,11 @@
 	</div>
 </div>
 
+<!-- button to take the user to the settings page -->
 <a style="color:#FAEBD7" class="waves-effect waves-light btn brown darken-4" href="/profile/settings">settings</a>
 
+<!-- Accordion which displays after the user adds whisky to their favorite list. ejs tags contain the conditional
+code that displayes the accordion or text asking the user to add whiky's to their favorites to see them displayed -->
 <% if(whisky.length > 0){ %>
 	<h5>Favorite Whiskies</h5>
 	<ul class="collapsible popout" data-collapsible="accordion">
