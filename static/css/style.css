@@ -16,14 +16,6 @@ body {
     width: 70em;
 }
 
-@media (max-width: 62em) {
-    #getStarted {
-        margin: 0 auto;
-        text-align: left;
-        width: 30em;
-    }
-}
-
 #mapOld {
     width: 36em;
     margin: 0 auto;
@@ -65,4 +57,18 @@ body {
     width: 20em;
     margin: 3em auto 0 auto;
     border-radius: 5%
+}
+
+/*conditions for small screen sizes*/
+@media (max-width: 62em) {
+    #getStarted {
+        margin: 0 auto;
+        text-align: left;
+        width: 30em;
+    }
+
+    #mapOld {
+        width: 30em;
+        margin: 0 auto;
+    }
 }
