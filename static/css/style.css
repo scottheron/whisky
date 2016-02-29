@@ -16,6 +16,14 @@ body {
     width: 70em;
 }
 
+@media (max-width: 62em) {
+    #getStarted {
+        margin: 0 auto;
+        text-align: left;
+        width: 30em;
+    }
+}
+
 #mapOld {
     width: 36em;
     margin: 0 auto;
@@ -29,7 +37,7 @@ body {
     width: 60em;
 }
 .heading {
-    margin: 1em 0 1em 2em;
+    margin: 1em auto 1em 2em;
 }
 
 #profilePic {
@@ -49,12 +57,12 @@ body {
 
 #about {
     margin: 0 auto;
-    width: 60em;
+    width: 30em;
 }
 
 #aboutPicture img {
     float: left;
     width: 20em;
-    margin: 3em 0 0 21em;
+    margin: 3em auto 0 auto;
     border-radius: 5%
 }

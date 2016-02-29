@@ -7,4 +7,7 @@ $(document).ready(function() {
 	/*JS material box initialization*/
 	$('.materialboxed').materialbox();
 
+    /*Nav bar burger button collapse control*/
+    $(".button-collapse").sideNav();
+
 });
