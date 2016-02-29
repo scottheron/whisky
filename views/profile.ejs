@@ -40,7 +40,7 @@ code that displayes the accordion or text asking the user to add whiky's to thei
 					<%= tag.tag %>, 
 				<% }); %></p>
 				<form class=".delete-link" action="/profile/<%= whisky.id %>/delete">
-					<button style="color:#FAEBD7" class="btn waves-effect waves-light brown darken-4" type="delete" name="action">Delete
+					<button onclick="Materialize.toast('Favorite Removed', 4000)" style="color:#FAEBD7" class="btn waves-effect waves-light brown darken-4" type="delete" name="action">Delete
 						<i class="material-icons right">send</i>
 					</button>
 				</form>

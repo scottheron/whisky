@@ -117,7 +117,7 @@ a carousel showing images from a flicker search that is context relivent.-->
 
 <!-- Add to favorites button -->
 <form method="POST" class="col s6">
-	<button  style="color:#FAEBD7" class="btn waves-effect waves-light brown darken-4" type="submit" name="action">Add To Favorites
+	<button onclick="Materialize.toast('Favorite Added', 4000)" style="color:#FAEBD7" class="btn waves-effect waves-light brown darken-4" type="submit" name="action">Add To Favorites
     		<i class="material-icons right">send</i>
   	</button>
   	<input type="hidden" name="name" value="<%= whiskyName %>" />
