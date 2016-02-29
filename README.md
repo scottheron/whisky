@@ -27,7 +27,7 @@ This is a web app that lets a user browse through single malt Scottish whiskies,
 * [Scotch Malt Whisky](http://www.scotchmaltwhisky.co.uk/)
 
 ### Known Issues
-* Is not mobile responsive.
+* none
 
 ### Disclaimer
 The Whisky Stone is an original app from [Scott Heron](https://github.com/scottheron/). Non API data comes from the Scotch Malt Whisky Database (http://www.scotchmaltwhisky.co.uk/)
