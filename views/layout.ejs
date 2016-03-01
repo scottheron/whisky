@@ -14,7 +14,7 @@ as well as links to the main CSS and Style files. A navigation bar has also been
 	<link rel="stylesheet" media="screen" href="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
 	<!-- Compiled and minified CSS -->
   	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/css/materialize.min.css" media="screen,projection">
-	<link rel="stylesheet" type="text/css" href="/css/style.css" media="screen,projection">
+  	<link rel="stylesheet" type="text/css" href="/css/style.css" media="screen,projection">
 
 	<title>The Whisky Stone</title>
 </head>
@@ -29,19 +29,25 @@ as well as links to the main CSS and Style files. A navigation bar has also been
 	        	<li><a style="color:#FAEBD7" href="/about">About</a></li>
 		  	   	<li><a style="color:#FAEBD7" href="/">Home</a></li>
 		    	<li><a style="color:#FAEBD7" href="/whisky">Whisky</a></li>
-		    	<li><a style="color:#FAEBD7" href="/profile">Profile</a></li>
-		    	<li><a style="color:#FAEBD7" href="/signuporlogin/signup">Sign Up</a></li>
-		    	<li><a style="color:#FAEBD7" href="/signuporlogin/login">Login</a></li>
-		    	<li><a style="color:#FAEBD7" href="/signuporlogin/logout">Log Out</a></li>
-	      	</ul>
+		    	<% if (currentUser) { %>
+		    		<li><a style="color:#FAEBD7" href="/profile">Profile</a></li>
+		    		<li><a style="color:#FAEBD7" href="/signuporlogin/logout">Log Out</a></li>
+		    	<% } else { %>
+		    		<li><a style="color:#FAEBD7" href="/signuporlogin/login">Login</a></li>
+		    		<li><a style="color:#FAEBD7" href="/signuporlogin/signup">Sign Up</a></li>
+		    	<% } %>
+		    </ul>
 	      	<ul class="side-nav brown darken-4" id="mobile-demo">
 	        	<li><a style="color:#FAEBD7" href="/about">About</a></li>
 		  	   	<li><a style="color:#FAEBD7" href="/">Home</a></li>
 		    	<li><a style="color:#FAEBD7" href="/whisky">Whisky</a></li>
-		    	<li><a style="color:#FAEBD7" href="/profile">Profile</a></li>
-		    	<li><a style="color:#FAEBD7" href="/signuporlogin/signup">Sign Up</a></li>
-		    	<li><a style="color:#FAEBD7" href="/signuporlogin/login">Login</a></li>
-		    	<li><a style="color:#FAEBD7" href="/signuporlogin/logout">Log Out</a></li>
+		    	<% if (currentUser) { %>
+		    		<li><a style="color:#FAEBD7" href="/profile">Profile</a></li>
+		    		<li><a style="color:#FAEBD7" href="/signuporlogin/logout">Log Out</a></li>
+		    	<% } else { %>
+		    		<li><a style="color:#FAEBD7" href="/signuporlogin/login">Login</a></li>
+		    		<li><a style="color:#FAEBD7" href="/signuporlogin/signup">Sign Up</a></li>
+		    	<% } %>
 	      	</ul>
 	    </div>
 	</nav>
@@ -55,7 +61,7 @@ as well as links to the main CSS and Style files. A navigation bar has also been
 	<script src="//netdna.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
 	<!-- Compiled and minified JavaScript -->
   	<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/js/materialize.min.js"></script>
-	<script type="text/javascript" src="/js/script.js"></script>
+  	<script type="text/javascript" src="/js/script.js"></script>
 	
 </body>
 </html>

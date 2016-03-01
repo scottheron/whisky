@@ -29,9 +29,7 @@ global variables. Closes at the end of the code.*/
 
     /*multer file uploader setup*/
     var upload = multer({dest: './uploads'});
-    /*sets an avatar variable used to contain the users uploaded image*/
-    var avatar = "";
-    
+        
     /*Sets up the middleware for view engine, ejsLayouts, bodyParser, session and sets up 
     the static directory for files such as CSS and JS.*/
     app.set("view engine", "ejs");

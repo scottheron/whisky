@@ -30,7 +30,7 @@ router.get("/", function(req, res){
 address. Then perform a flickr image search and if the search is invalid (contains a '-' or returns less than 
 10 results) search with default settings "single+malt+whisky". In addition if the listItems and bottling 
 variables are undefined set them to a blank array*/
-router.get("/:id", function(req, res){
+router.get("/:id/select", function(req, res){
     var whiskyName = req.params.id;
     var search;
     jsdom.env(
@@ -80,7 +80,7 @@ router.get("/:id", function(req, res){
 
 /*Post route to send the whisky name to the database and save it to the users profile as a favorite
 using the join table*/
-router.post("/:id", function(req, res){
+router.post("/:id/select", function(req, res){
     var whiskyName = req.params.id;
     var tastings = req.body.tastings;
     if (req.currentUser){
@@ -102,7 +102,7 @@ router.post("/:id", function(req, res){
             .then(function(user){
                 if (user) {
                     user.addWhisky(whisky);
-                    res.redirect('/whisky/'+whiskyName);
+                    res.redirect('/whisky/'+whiskyName+'/select');
                 } else {
                     res.send("error");
                 }
@@ -112,6 +112,11 @@ router.post("/:id", function(req, res){
     } else {
         res.redirect("/signuporlogin/login");
     }
+});
+
+/*Sets up a 404 route to catch invalid paths and display the 404 page.*/
+router.use(function(req, res, next) {
+    res.status(404).render("404");
 });
 
 module.exports = router;

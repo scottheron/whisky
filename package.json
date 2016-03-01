@@ -36,6 +36,7 @@
     "require": "^2.4.20",
     "router": "^1.1.4",
     "sequelize": "^3.19.2",
-    "sequelize-cli": "^2.3.1"
+    "sequelize-cli": "^2.3.1",
+    "sweetalert": "^1.1.3"
   }
 }

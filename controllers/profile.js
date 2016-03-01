@@ -26,7 +26,7 @@ router.get("/", function(req, res){
             }
         })
         .then(function(user){
-            var userPic = cloudinary.url(user.image, { width: 300});
+            var userPic = cloudinary.url(user.image, { width: 300 });
             user.getWhiskies({include:[db.tag]})
             .then(function(whisky) {
                 res.render("profile", {user, whisky, userPic});
@@ -87,6 +87,7 @@ router.get("/settings", function(req, res){
 /*Post route for settings uploads a users profile picture choice and saves the resultant URL link to
 the database entry for the user table under image*/
 router.post("/settings", upload.single('avatar'), function(req, res){
+    console.log(req.body.avatar);
     cloudinary.uploader.upload(req.file.path, function(result) {
         avatarId = result.public_id;
         db.user.update({
@@ -122,6 +123,11 @@ router.get('/:id/delete', function(req, res) {
      .catch(function(e) {
         res.send({'msg': 'error', 'error': e});
      });
+});
+
+/*Sets up a 404 route to catch invalid paths and display the 404 page.*/
+router.use(function(req, res, next) {
+    res.status(404).render("404");
 });
 
 module.exports = router;

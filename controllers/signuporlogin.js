@@ -47,7 +47,7 @@ router.post("/signup", function(req, res){
     var email = req.body.email;
     var password = req.body.password;
     var password2 = req.body.password2;
-    if(password === password2) {
+    if(password.length < 10 && password === password2) {
         db.user.findOrCreate({
             where: {
                 email: email
@@ -74,6 +74,11 @@ their session*/
 router.get('/logout', function(req, res) {
     req.session.userId = false;
     res.redirect('/');
+});
+
+/*Sets up a 404 route to catch invalid paths and display the 404 page.*/
+router.use(function(req, res, next) {
+    res.status(404).render("404");
 });
 
 module.exports = router;
