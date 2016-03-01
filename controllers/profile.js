@@ -87,7 +87,6 @@ router.get("/settings", function(req, res){
 /*Post route for settings uploads a users profile picture choice and saves the resultant URL link to
 the database entry for the user table under image*/
 router.post("/settings", upload.single('avatar'), function(req, res){
-    console.log(req.body.avatar);
     cloudinary.uploader.upload(req.file.path, function(result) {
         avatarId = result.public_id;
         db.user.update({
@@ -97,12 +96,9 @@ router.post("/settings", upload.single('avatar'), function(req, res){
                 id: req.session.userId
             }
         })
-        .then(function(avatarId){
-            if (avatarId)   {
-                res.redirect("/profile/settings");
-            } else {
-                res.send("error");
-            }
+        .then(function(){
+            res.redirect("/profile/settings");
+          
         });
     });
 });
