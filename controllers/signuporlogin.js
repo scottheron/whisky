@@ -35,14 +35,14 @@ router.post('/login', function(req, res) {
 });
 
 /*Set up the sign up route and render the signup page*/
-router.get("/signup", function(req, res){
+router.get("/signuporlogin/signup", function(req, res){
     res.render("signup.ejs");
 });
 
 /*Grab the sign up information from the form on the sign up page. If the user doesn't
 already exist then create a database entry for the new user with their name, email 
-and password*/
-router.post("/signup", function(req, res){
+and password.*/
+router.post("/signuporlogin/signup", function(req, res){
     var name = req.body.name;
     var email = req.body.email;
     var password = req.body.password;
